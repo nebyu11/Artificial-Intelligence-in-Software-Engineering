@@ -66,4 +66,6 @@ class TaskQueue {
   }
 }
 
-module.exports = { TaskQueue, TaskQueueLogger };
+module.exports = TaskQueue;
+module.exports.TaskQueue = TaskQueue;
+module.exports.TaskQueueLogger = TaskQueueLogger;
