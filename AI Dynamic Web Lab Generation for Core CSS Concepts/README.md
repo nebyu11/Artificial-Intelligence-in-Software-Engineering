@@ -5,6 +5,12 @@ This directory contains interactive, single-file HTML/CSS/JS learning applicatio
 
 ---
 
+## AI Tools & Technology Stack Used
+- **AI Development Environment / Tool**: Antigravity AI Assistant & Interactive Canvas Frontend Generator.
+- **Frontend Architecture**: Single-file HTML5, Vanilla CSS3 (Dark Theme visual design system with Google Fonts `Inter` and `Fira Code`), and ES6+ JavaScript (DOM Event Listener architecture for real-time CSS manipulation).
+
+---
+
 ## Files Included
 
 1. **`initial_box_model.html`**:
@@ -17,10 +23,13 @@ This directory contains interactive, single-file HTML/CSS/JS learning applicatio
 3. **`flexbox_grid_playground.html`**:
    - Interactive playground for comparing CSS Flexbox and Grid container layout properties (`display`, `flex-direction`, `justify-content`, `align-items`, and `grid-template-columns`).
 
-4. **Screenshots**:
+4. **Execution Screenshots**:
    - `initial_box_model.png`: Execution output of the initial Box Model visualizer.
    - `refined_box_model.png`: Execution output of the side-specific Box Model visualizer.
    - `flexbox_grid_playground.png`: Execution output of the Flexbox and Grid layout playground.
+
+5. **Deliverable Document**:
+   - `Nebyu_AI_Dynamic_Web_Lab_Generation_for_Core_CSS_Concepts.docx`: Comprehensive Word document ready for submission / upload to Google Docs.
 
 ---
 
@@ -64,4 +73,4 @@ This directory contains interactive, single-file HTML/CSS/JS learning applicatio
 Rapidly generating and interacting with dynamic web labs offers a transformative learning advantage compared to studying static textbook diagrams or passive documentation. Immediate feedback loops enable learners to internalize subtle layout behaviors through direct experimentation. For instance, when switching an element’s `display` property from `block` to `inline`, the lab immediately visualizes how explicit `width` settings are disregarded by browser rendering engines, and how vertical margins collapse or cease pushing adjacent elements. Observing these immediate layout shifts alongside real-time calculated CSS rules bridges abstract theory and practical implementation far more effectively than traditional static media.
 
 ### AI Iterative Workflow
-Utilizing a sequential, refinement-based prompting strategy closely models real-world software engineering practices. Attempting to generate complex, feature-rich tools through a single, overly verbose prompt frequently leads to AI hallucination, missing features, or unmaintainable single-pass code. By starting with a functional Minimum Viable Product (MVP)—such as the Initial Box Model Lab—and subsequently issuing targeted refinement prompts (e.g., adding individual side sliders and corner radius controls), the developer maintains full architectural oversight. This step-by-step iteration allows for modular testing, pinpoint debugging, and scalable software design.
+Utilizing a sequential, refinement-based prompting strategy closely models real-world software engineering practices. Attempting to generate complex, feature-rich tools through a single, overly verbose prompt frequently leads to AI hallucination, missing features, or unmaintainable single-pass code. By starting with a functional Minimum Viable Product (MVP)—such as the Initial Box Model Lab—and subsequently introducing targeted refinement prompts (e.g., adding individual side sliders and corner radius controls), the developer maintains full architectural oversight. This step-by-step iteration allows for modular testing, pinpoint debugging, and scalable software design.
