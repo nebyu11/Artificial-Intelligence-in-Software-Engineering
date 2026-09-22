@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Box Model & Display Interactive Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --margin-color: #ffedd5;
+      --margin-border: #fdba74;
+      --padding-color: #dcfce7;
+      --padding-border: #86efac;
+      --content-color: #dbeafe;
+      --content-border: #93c5fd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #1e293b;
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .main-container {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 2rem;
+      padding: 2rem;
+      flex: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .control-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+      color: #38bdf8;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .value-badge {
+      background: #334155;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: #38bdf8;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    select:focus {
+      border-color: var(--primary);
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+
+    .legend-item {
+      padding: 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .legend-margin { background: var(--margin-color); color: #9a3412; }
+    .legend-padding { background: var(--padding-color); color: #166534; }
+    .legend-content { background: var(--content-color); color: #1e40af; }
+
+    .stage-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .canvas-stage {
+      background: #020617;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      min-height: 400px;
+      display: block;
+      position: relative;
+      overflow: auto;
+    }
+
+    /* Box 1 Controllable */
+    #box1 {
+      box-sizing: content-box;
+      background-color: var(--content-color);
+      background-clip: content-box;
+      border: 6px solid #6366f1;
+      padding: 25px;
+      margin: 20px;
+      width: 220px;
+      display: block;
+      color: #0f172a;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.15s ease;
+      position: relative;
+      /* Box model visualizer helper */
+      box-shadow: 
+        0 0 0 20px var(--margin-color),
+        inset 0 0 0 25px var(--padding-color);
+    }
+
+    #box1-inner {
+      background: #3b82f6;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    /* Box 2 Sibling */
+    #box2 {
+      background: #334155;
+      border: 3px solid #64748b;
+      padding: 20px;
+      margin: 20px;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .code-preview {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #a5f3fc;
+      line-height: 1.5;
+    }
+
+    .code-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS Box Model & Display Interactive Lab</h1>
+    <p>Explore real-time box model geometry and display property interactions</p>
+  </header>
+
+  <div class="main-container">
+    <div class="control-panel">
+      <div class="panel-title">Controls (Box 1)</div>
+
+      <div class="control-group">
+        <div class="label-row">
+          <label for="displaySelect">Display Property</label>
+        </div>
+        <select id="displaySelect">
+          <option value="block" selected>block</option>
+          <option value="inline-block">inline-block</option>
+          <option value="inline">inline</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <div class="label-row">
+          <label for="widthInput">Width</label>
+          <span class="value-badge" id="widthVal">220px</span>
+        </div>
+        <input type="range" id="widthInput" min="50" max="400" value="220">
+      </div>
+
+      <div class="control-group">
+        <div class="label-row">
+          <label for="paddingInput">Padding (All sides)</label>
+          <span class="value-badge" id="paddingVal">25px</span>
+        </div>
+        <input type="range" id="paddingInput" min="0" max="60" value="25">
+      </div>
+
+      <div class="control-group">
+        <div class="label-row">
+          <label for="marginInput">Margin (All sides)</label>
+          <span class="value-badge" id="marginVal">20px</span>
+        </div>
+        <input type="range" id="marginInput" min="0" max="60" value="20">
+      </div>
+
+      <div class="control-group">
+        <div class="label-row">
+          <label for="borderInput">Border Width</label>
+          <span class="value-badge" id="borderVal">6px</span>
+        </div>
+        <input type="range" id="borderInput" min="0" max="20" value="6">
+      </div>
+
+      <div class="legend">
+        <div class="legend-margin">Margin</div>
+        <div class="legend-padding">Padding</div>
+        <div class="legend-content">Content</div>
+      </div>
+    </div>
+
+    <div class="stage-container">
+      <div class="canvas-stage">
+        <div id="box1">
+          <div id="box1-inner">Box 1 (Controllable)</div>
+        </div>
+        <div id="box2">Box 2 (Sibling Element)</div>
+      </div>
+
+      <div class="code-preview">
+        <div class="code-title">Live CSS Output for Box 1</div>
+        <pre id="cssOutput">#box1 {
+  display: block;
+  width: 220px;
+  padding: 25px;
+  margin: 20px;
+  border: 6px solid #6366f1;
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const box1 = document.getElementById('box1');
+    const displaySelect = document.getElementById('displaySelect');
+    const widthInput = document.getElementById('widthInput');
+    const paddingInput = document.getElementById('paddingInput');
+    const marginInput = document.getElementById('marginInput');
+    const borderInput = document.getElementById('borderInput');
+
+    const widthVal = document.getElementById('widthVal');
+    const paddingVal = document.getElementById('paddingVal');
+    const marginVal = document.getElementById('marginVal');
+    const borderVal = document.getElementById('borderVal');
+    const cssOutput = document.getElementById('cssOutput');
+
+    function updateBox() {
+      const display = displaySelect.value;
+      const width = widthInput.value + 'px';
+      const padding = paddingInput.value + 'px';
+      const margin = marginInput.value + 'px';
+      const border = borderInput.value + 'px';
+
+      widthVal.textContent = width;
+      paddingVal.textContent = padding;
+      marginVal.textContent = margin;
+      borderVal.textContent = border;
+
+      box1.style.display = display;
+      box1.style.width = width;
+      box1.style.padding = padding;
+      box1.style.margin = margin;
+      box1.style.borderWidth = border;
+
+      // Update background clip visualizer box shadows
+      box1.style.boxShadow = `0 0 0 ${marginInput.value}px var(--margin-color), inset 0 0 0 ${paddingInput.value}px var(--padding-color)`;
+
+      cssOutput.textContent = `#box1 {
+  display: ${display};
+  width: ${width};
+  padding: ${padding};
+  margin: ${margin};
+  border: ${border} solid #6366f1;
+}`;
+    }
+
+    displaySelect.addEventListener('change', updateBox);
+    widthInput.addEventListener('input', updateBox);
+    paddingInput.addEventListener('input', updateBox);
+    marginInput.addEventListener('input', updateBox);
+    borderInput.addEventListener('input', updateBox);
+
+    updateBox();
+  </script>
+</body>
+</html>

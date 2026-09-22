@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refined Box Model Visualizer (Side-Specific Controls)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --bg: #0b0f19;
+      --card-bg: #161e2e;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: #243044;
+      --margin-color: #ffedd5;
+      --padding-color: #dcfce7;
+      --content-color: #dbeafe;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #161e2e;
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .main-layout {
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      gap: 2rem;
+      padding: 2rem;
+      flex: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .controls-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-height: 820px;
+      overflow-y: auto;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #38bdf8;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .grid-4-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .control-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .control-item label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .val-text {
+      color: #38bdf8;
+      font-family: 'Fira Code', monospace;
+    }
+
+    input[type="range"] {
+      accent-color: var(--primary);
+      width: 100%;
+      cursor: pointer;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.6rem;
+      background: #0b0f19;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .canvas-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stage {
+      background: #040711;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 3rem;
+      min-height: 460px;
+      overflow: auto;
+    }
+
+    #box1 {
+      box-sizing: content-box;
+      background-color: var(--content-color);
+      background-clip: content-box;
+      border-style: solid;
+      border-color: #3b82f6;
+      color: #0f172a;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.1s ease;
+    }
+
+    #box1-inner {
+      background: #2563eb;
+      color: white;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    #box2 {
+      background: #1e293b;
+      border: 3px solid #475569;
+      padding: 20px;
+      margin: 20px;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+      border-radius: 6px;
+    }
+
+    .code-box {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #a5f3fc;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Refined Box Model Visualizer</h1>
+    <p>Individual side-specific controls for padding, margin, border, and corner radius</p>
+  </header>
+
+  <div class="main-layout">
+    <div class="controls-container">
+      <div class="section-title">General & Display</div>
+      <div class="grid-4-col">
+        <div class="control-item">
+          <label>Display <span id="displayVal" class="val-text">block</span></label>
+          <select id="displaySelect">
+            <option value="block" selected>block</option>
+            <option value="inline-block">inline-block</option>
+            <option value="inline">inline</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label>Width <span id="widthVal" class="val-text">200px</span></label>
+          <input type="range" id="widthInput" min="60" max="350" value="200">
+        </div>
+      </div>
+
+      <div class="section-title">Corner Radius</div>
+      <div class="control-item">
+        <label>Border Radius <span id="radiusVal" class="val-text">8px</span></label>
+        <input type="range" id="radiusInput" min="0" max="50" value="8">
+      </div>
+
+      <div class="section-title">Margin (Individual Sides)</div>
+      <div class="grid-4-col">
+        <div class="control-item">
+          <label>Top <span id="mTVal" class="val-text">15px</span></label>
+          <input type="range" id="mT" min="0" max="50" value="15">
+        </div>
+        <div class="control-item">
+          <label>Right <span id="mRVal" class="val-text">15px</span></label>
+          <input type="range" id="mR" min="0" max="50" value="15">
+        </div>
+        <div class="control-item">
+          <label>Bottom <span id="mBVal" class="val-text">15px</span></label>
+          <input type="range" id="mB" min="0" max="50" value="15">
+        </div>
+        <div class="control-item">
+          <label>Left <span id="mLVal" class="val-text">15px</span></label>
+          <input type="range" id="mL" min="0" max="50" value="15">
+        </div>
+      </div>
+
+      <div class="section-title">Padding (Individual Sides)</div>
+      <div class="grid-4-col">
+        <div class="control-item">
+          <label>Top <span id="pTVal" class="val-text">20px</span></label>
+          <input type="range" id="pT" min="0" max="50" value="20">
+        </div>
+        <div class="control-item">
+          <label>Right <span id="pRVal" class="val-text">20px</span></label>
+          <input type="range" id="pR" min="0" max="50" value="20">
+        </div>
+        <div class="control-item">
+          <label>Bottom <span id="pBVal" class="val-text">20px</span></label>
+          <input type="range" id="pB" min="0" max="50" value="20">
+        </div>
+        <div class="control-item">
+          <label>Left <span id="pLVal" class="val-text">20px</span></label>
+          <input type="range" id="pL" min="0" max="50" value="20">
+        </div>
+      </div>
+
+      <div class="section-title">Border Width (Individual Sides)</div>
+      <div class="grid-4-col">
+        <div class="control-item">
+          <label>Top <span id="bTVal" class="val-text">4px</span></label>
+          <input type="range" id="bT" min="0" max="20" value="4">
+        </div>
+        <div class="control-item">
+          <label>Right <span id="bRVal" class="val-text">4px</span></label>
+          <input type="range" id="bR" min="0" max="20" value="4">
+        </div>
+        <div class="control-item">
+          <label>Bottom <span id="bBVal" class="val-text">4px</span></label>
+          <input type="range" id="bB" min="0" max="20" value="4">
+        </div>
+        <div class="control-item">
+          <label>Left <span id="bLVal" class="val-text">4px</span></label>
+          <input type="range" id="bL" min="0" max="20" value="4">
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="stage">
+        <div id="box1">
+          <div id="box1-inner">Box 1 (Controlled Element)</div>
+        </div>
+        <div id="box2">Box 2 (Sibling Element)</div>
+      </div>
+
+      <div class="code-box">
+        <pre id="codeOutput">#box1 { ... }</pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const box1 = document.getElementById('box1');
+    const displaySelect = document.getElementById('displaySelect');
+    const widthInput = document.getElementById('widthInput');
+    const radiusInput = document.getElementById('radiusInput');
+
+    const inputs = ['mT', 'mR', 'mB', 'mL', 'pT', 'pR', 'pB', 'pL', 'bT', 'bR', 'bB', 'bL'];
+    const elements = {};
+    inputs.forEach(id => {
+      elements[id] = document.getElementById(id);
+      elements[id + 'Val'] = document.getElementById(id + 'Val');
+    });
+
+    const displayVal = document.getElementById('displayVal');
+    const widthVal = document.getElementById('widthVal');
+    const radiusVal = document.getElementById('radiusVal');
+    const codeOutput = document.getElementById('codeOutput');
+
+    function update() {
+      const display = displaySelect.value;
+      const width = widthInput.value + 'px';
+      const radius = radiusInput.value + 'px';
+
+      displayVal.textContent = display;
+      widthVal.textContent = width;
+      radiusVal.textContent = radius;
+
+      box1.style.display = display;
+      box1.style.width = width;
+      box1.style.borderRadius = radius;
+
+      // Margins
+      const mT = elements.mT.value + 'px';
+      const mR = elements.mR.value + 'px';
+      const mB = elements.mB.value + 'px';
+      const mL = elements.mL.value + 'px';
+      box1.style.marginTop = mT;
+      box1.style.marginRight = mR;
+      box1.style.marginBottom = mB;
+      box1.style.marginLeft = mL;
+
+      elements.mTVal.textContent = mT;
+      elements.mRVal.textContent = mR;
+      elements.mBVal.textContent = mB;
+      elements.mLVal.textContent = mL;
+
+      // Padding
+      const pT = elements.pT.value + 'px';
+      const pR = elements.pR.value + 'px';
+      const pB = elements.pB.value + 'px';
+      const pL = elements.pL.value + 'px';
+      box1.style.paddingTop = pT;
+      box1.style.paddingRight = pR;
+      box1.style.paddingBottom = pB;
+      box1.style.paddingLeft = pL;
+
+      elements.pTVal.textContent = pT;
+      elements.pRVal.textContent = pR;
+      elements.pBVal.textContent = pB;
+      elements.pLVal.textContent = pL;
+
+      // Borders
+      const bT = elements.bT.value + 'px';
+      const bR = elements.bR.value + 'px';
+      const bB = elements.bB.value + 'px';
+      const bL = elements.bL.value + 'px';
+      box1.style.borderTopWidth = bT;
+      box1.style.borderRightWidth = bR;
+      box1.style.borderBottomWidth = bB;
+      box1.style.borderLeftWidth = bL;
+
+      elements.bTVal.textContent = bT;
+      elements.bRVal.textContent = bR;
+      elements.bBVal.textContent = bB;
+      elements.bLVal.textContent = bL;
+
+      // Dynamic CSS snippet
+      codeOutput.textContent = `#box1 {
+  display: ${display};
+  width: ${width};
+  border-radius: ${radius};
+  margin: ${mT} ${mR} ${mB} ${mL};
+  padding: ${pT} ${pR} ${pB} ${pL};
+  border-width: ${bT} ${bR} ${bB} ${bL};
+  border-style: solid;
+  border-color: #3b82f6;
+}`;
+    }
+
+    displaySelect.addEventListener('change', update);
+    widthInput.addEventListener('input', update);
+    radiusInput.addEventListener('input', update);
+    inputs.forEach(id => elements[id].addEventListener('input', update));
+
+    update();
+  </script>
+</body>
+</html>

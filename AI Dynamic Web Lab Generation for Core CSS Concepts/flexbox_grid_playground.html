@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizing Flexbox & Grid Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #1e293b;
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .playground-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 2rem;
+      padding: 2rem;
+      flex: 1;
+      max-width: 1500px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .controls {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    .controls-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #c084fc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+    }
+
+    .select-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .select-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.65rem 0.8rem;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    select:focus {
+      border-color: var(--primary);
+    }
+
+    .stage-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .layout-stage {
+      background: #020617;
+      border: 2px dashed #475569;
+      border-radius: 12px;
+      padding: 1.5rem;
+      min-height: 450px;
+      transition: all 0.2s ease;
+    }
+
+    .item {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 80px;
+      min-height: 80px;
+      transition: transform 0.15s ease;
+    }
+
+    .item:nth-child(2) { background: linear-gradient(135deg, #ec4899, #f43f5e); min-height: 100px; }
+    .item:nth-child(3) { background: linear-gradient(135deg, #10b981, #14b8a6); min-height: 70px; }
+    .item:nth-child(4) { background: linear-gradient(135deg, #f59e0b, #d97706); min-height: 110px; }
+    .item:nth-child(5) { background: linear-gradient(135deg, #06b6d4, #3b82f6); min-height: 90px; }
+
+    .code-box {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: #e9d5ff;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Visualizing Flexbox & Grid Playground</h1>
+    <p>Switch between CSS Flexbox and Grid layouts and observe container property responses in real-time</p>
+  </header>
+
+  <div class="playground-layout">
+    <div class="controls">
+      <div class="controls-title">Container CSS Controls</div>
+
+      <div class="select-group">
+        <label for="display">Display</label>
+        <select id="display">
+          <option value="flex" selected>flex</option>
+          <option value="grid">grid</option>
+          <option value="block">block</option>
+        </select>
+      </div>
+
+      <div class="select-group">
+        <label for="flexDirection">flex-direction (Flex mode)</label>
+        <select id="flexDirection">
+          <option value="row" selected>row</option>
+          <option value="row-reverse">row-reverse</option>
+          <option value="column">column</option>
+          <option value="column-reverse">column-reverse</option>
+        </select>
+      </div>
+
+      <div class="select-group">
+        <label for="justifyContent">justify-content</label>
+        <select id="justifyContent">
+          <option value="flex-start" selected>flex-start</option>
+          <option value="center">center</option>
+          <option value="flex-end">flex-end</option>
+          <option value="space-between">space-between</option>
+          <option value="space-around">space-around</option>
+          <option value="space-evenly">space-evenly</option>
+        </select>
+      </div>
+
+      <div class="select-group">
+        <label for="alignItems">align-items</label>
+        <select id="alignItems">
+          <option value="stretch" selected>stretch</option>
+          <option value="flex-start">flex-start</option>
+          <option value="center">center</option>
+          <option value="flex-end">flex-end</option>
+          <option value="baseline">baseline</option>
+        </select>
+      </div>
+
+      <div class="select-group">
+        <label for="gridTemplateColumns">grid-template-columns (Grid mode)</label>
+        <select id="gridTemplateColumns">
+          <option value="none">none</option>
+          <option value="1fr 1fr" selected>1fr 1fr</option>
+          <option value="1fr 1fr 1fr">1fr 1fr 1fr</option>
+          <option value="repeat(3, 1fr)">repeat(3, 1fr)</option>
+          <option value="100px 1fr 2fr">100px 1fr 2fr</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="stage-section">
+      <div id="container" class="layout-stage">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+        <div class="item">Item 4</div>
+        <div class="item">Item 5</div>
+      </div>
+
+      <div class="code-box">
+        <pre id="cssCode">.container { ... }</pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById('container');
+    const display = document.getElementById('display');
+    const flexDirection = document.getElementById('flexDirection');
+    const justifyContent = document.getElementById('justifyContent');
+    const alignItems = document.getElementById('alignItems');
+    const gridTemplateColumns = document.getElementById('gridTemplateColumns');
+    const cssCode = document.getElementById('cssCode');
+
+    function updateLayout() {
+      const dispVal = display.value;
+      const flexDirVal = flexDirection.value;
+      const justifyVal = justifyContent.value;
+      const alignVal = alignItems.value;
+      const gridColsVal = gridTemplateColumns.value;
+
+      container.style.display = dispVal;
+      container.style.flexDirection = flexDirVal;
+      container.style.justifyContent = justifyVal;
+      container.style.alignItems = alignVal;
+      container.style.gridTemplateColumns = gridColsVal;
+
+      let code = `.container {\n  display: ${dispVal};\n`;
+      if (dispVal === 'flex') {
+        code += `  flex-direction: ${flexDirVal};\n  justify-content: ${justifyVal};\n  align-items: ${alignVal};\n`;
+      } else if (dispVal === 'grid') {
+        code += `  grid-template-columns: ${gridColsVal};\n  justify-content: ${justifyVal};\n  align-items: ${alignVal};\n`;
+      }
+      code += `}`;
+
+      cssCode.textContent = code;
+    }
+
+    display.addEventListener('change', updateLayout);
+    flexDirection.addEventListener('change', updateLayout);
+    justifyContent.addEventListener('change', updateLayout);
+    alignItems.addEventListener('change', updateLayout);
+    gridTemplateColumns.addEventListener('change', updateLayout);
+
+    updateLayout();
+  </script>
+</body>
+</html>
