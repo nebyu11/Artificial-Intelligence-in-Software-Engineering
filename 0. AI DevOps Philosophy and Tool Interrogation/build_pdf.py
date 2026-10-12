@@ -32,26 +32,26 @@ class NumberedCanvas(canvas.Canvas):
         self.setFont("Helvetica", 8)
         self.setFillColor(colors.HexColor("#4A5568"))
 
-        # Header (Pages 2+)
+        # Running Header (Pages 2+)
         if self._pageNumber > 1:
             self.drawString(
-                54, 11 * inch - 36,
+                54, 11 * inch - 28,
                 "AI Lab Assignment: DevOps Philosophy and Tool Interrogation"
             )
             self.setStrokeColor(colors.HexColor("#CBD5E0"))
             self.setLineWidth(0.5)
-            self.line(54, 11 * inch - 40, 8.5 * inch - 54, 11 * inch - 40)
+            self.line(54, 11 * inch - 32, 8.5 * inch - 54, 11 * inch - 32)
 
-        # Footer (All pages)
+        # Running Footer (All pages)
         page_str = f"Page {self._pageNumber} of {page_count}"
-        self.drawRightString(8.5 * inch - 54, 32, page_str)
+        self.drawRightString(8.5 * inch - 54, 25, page_str)
         self.drawString(
-            54, 32,
+            54, 25,
             "Nebyu Assefa - AI DevOps Architecture Synthesis (Bash vs. Puppet)"
         )
         self.setStrokeColor(colors.HexColor("#CBD5E0"))
         self.setLineWidth(0.5)
-        self.line(54, 42, 8.5 * inch - 54, 42)
+        self.line(54, 34, 8.5 * inch - 54, 34)
         self.restoreState()
 
 
@@ -59,13 +59,14 @@ def generate_pdf():
     task_dir = r"C:\Users\Administrator\Desktop\Artificial-Intelligence-in-Software-Engineering\0. AI DevOps Philosophy and Tool Interrogation"
     pdf_filename = os.path.join(task_dir, "Nebyu_AI_DevOps_Philosophy_and_Tool_Interrogation.pdf")
 
+    # Tight, clean margins to guarantee a strict 3-page layout
     doc = SimpleDocTemplate(
         pdf_filename,
         pagesize=letter,
-        leftMargin=50,
-        rightMargin=50,
-        topMargin=46,
-        bottomMargin=48
+        leftMargin=48,
+        rightMargin=48,
+        topMargin=36,
+        bottomMargin=38
     )
 
     styles = getSampleStyleSheet()
@@ -73,67 +74,54 @@ def generate_pdf():
     # Color Palette
     PRIMARY = colors.HexColor("#1A365D")    # Deep Navy
     SECONDARY = colors.HexColor("#2B6CB0")  # Slate Blue
-    ACCENT = colors.HexColor("#10A37F")     # Mint Green
     TEXT_DARK = colors.HexColor("#2D3748")  # Charcoal
     BG_LIGHT = colors.HexColor("#F7FAFC")
-    BORDER_LIGHT = colors.HexColor("#E2E8F0")
+    BORDER_LIGHT = colors.HexColor("#CBD5E0")
 
     title_style = ParagraphStyle(
         'DocTitle',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=18,
-        leading=22,
+        fontSize=16,
+        leading=19,
         textColor=PRIMARY,
-        spaceAfter=4
+        spaceAfter=2
     )
 
     subtitle_style = ParagraphStyle(
         'DocSubTitle',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=9,
-        leading=13,
+        fontSize=8.5,
+        leading=11,
         textColor=colors.HexColor("#4A5568"),
-        spaceAfter=6
+        spaceAfter=4
     )
 
-    link_banner_style = ParagraphStyle(
-        'LinkBanner',
+    github_banner_style = ParagraphStyle(
+        'GithubBanner',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=8.5,
-        leading=12,
+        fontSize=8,
+        leading=11,
         textColor=PRIMARY,
         backColor=colors.HexColor("#EBF8FF"),
         borderColor=SECONDARY,
         borderWidth=0.75,
-        borderPadding=6,
+        borderPadding=5,
         spaceBefore=2,
-        spaceAfter=8
+        spaceAfter=5
     )
 
     h1_style = ParagraphStyle(
         'H1_Custom',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=11.5,
-        leading=15,
-        textColor=PRIMARY,
-        spaceBefore=8,
-        spaceAfter=4,
-        keepWithNext=True
-    )
-
-    h2_style = ParagraphStyle(
-        'H2_Custom',
-        parent=styles['Normal'],
-        fontName='Helvetica-Bold',
-        fontSize=9.5,
+        fontSize=10.5,
         leading=13,
-        textColor=SECONDARY,
-        spaceBefore=6,
-        spaceAfter=2,
+        textColor=PRIMARY,
+        spaceBefore=5,
+        spaceAfter=3,
         keepWithNext=True
     )
 
@@ -141,33 +129,33 @@ def generate_pdf():
         'Body_Custom',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=8.5,
-        leading=12,
+        fontSize=8,
+        leading=11,
         textColor=TEXT_DARK,
-        spaceAfter=6
+        spaceAfter=4
     )
 
     prompt_style = ParagraphStyle(
         'PromptStyle',
         parent=body_style,
         fontName='Helvetica-Oblique',
-        fontSize=8.5,
-        leading=12,
+        fontSize=7.5,
+        leading=10,
         textColor=colors.HexColor("#1A365D"),
         backColor=colors.HexColor("#EDF2F7"),
-        borderColor=colors.HexColor("#CBD5E0"),
-        borderWidth=0.75,
-        borderPadding=6,
-        spaceBefore=3,
-        spaceAfter=6
+        borderColor=BORDER_LIGHT,
+        borderWidth=0.5,
+        borderPadding=4,
+        spaceBefore=2,
+        spaceAfter=4
     )
 
     table_header_style = ParagraphStyle(
         'TableHeader',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=8,
-        leading=10,
+        fontSize=7.5,
+        leading=9.5,
         textColor=colors.white,
         alignment=1
     )
@@ -176,15 +164,15 @@ def generate_pdf():
         'TableCell',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=7.5,
-        leading=9.5,
+        fontSize=7,
+        leading=8.5,
         textColor=TEXT_DARK
     )
 
     story = []
 
     # =========================================================================
-    # PAGE 1: Header, Links, Prompt, and Interaction Evidence Screenshot
+    # PAGE 1: Header, Prompt Formulation & Visual Evidence Screenshot
     # =========================================================================
     story.append(Paragraph("Nebyu_AI: DevOps Philosophy and Tool Interrogation", title_style))
     story.append(Paragraph(
@@ -194,54 +182,43 @@ def generate_pdf():
         "<b>Evaluation:</b> Manual QA Review",
         subtitle_style
     ))
-    story.append(HRFlowable(width="100%", thickness=1.5, color=PRIMARY, spaceAfter=6))
+    story.append(HRFlowable(width="100%", thickness=1.2, color=PRIMARY, spaceAfter=4))
 
-    # Link Banner (Google Drive & GitHub)
-    banner_text = (
-        "<b>SUBMISSION CODE &amp; DOCUMENT ACCESS (CRITERION 1 &amp; 4):</b><br/>"
-        "• <b>Google Drive Submission Document:</b> "
-        "<a href='https://drive.google.com/drive/folders/1ieAJZJY1d9oHZPRUdErNO9y1awVH0i6m?usp=drive_link' color='#2B6CB0'><u>Nebyu_AI: DevOps Philosophy and Tool Interrogation (Google Drive)</u></a><br/>"
-        "• <b>GitHub Public Task Folder:</b> "
+    # GitHub Repository Link
+    github_info = (
+        "<b>TASK REPOSITORY &amp; CODEBASE (RUBRIC CRITERION 4):</b><br/>"
+        "• <b>GitHub Task Folder:</b> "
         "<a href='https://github.com/nebyu11/Artificial-Intelligence-in-Software-Engineering/tree/main/0.%20AI%20DevOps%20Philosophy%20and%20Tool%20Interrogation' color='#2B6CB0'><u>https://github.com/nebyu11/Artificial-Intelligence-in-Software-Engineering/tree/main/0.%20AI%20DevOps%20Philosophy%20and%20Tool%20Interrogation</u></a><br/>"
         "• <b>Core Analysis File:</b> "
-        "<a href='https://github.com/nebyu11/Artificial-Intelligence-in-Software-Engineering/blob/main/0.%20AI%20DevOps%20Philosophy%20and%20Tool%20Interrogation/analysis.txt' color='#2B6CB0'><u>analysis.txt (GitHub File View)</u></a>"
+        "<a href='https://github.com/nebyu11/Artificial-Intelligence-in-Software-Engineering/blob/main/0.%20AI%20DevOps%20Philosophy%20and%20Tool%20Interrogation/analysis.txt' color='#2B6CB0'><u>analysis.txt (Raw DevOps Architect Analysis)</u></a>"
     )
-    story.append(Paragraph(banner_text, link_banner_style))
+    story.append(Paragraph(github_info, github_banner_style))
 
-    story.append(Paragraph("1. Prompt Formulation (Step 1)", h1_style))
-    story.append(Paragraph(
-        "To synthesize the core philosophical differences between imperative shell scripting and declarative configuration management, "
-        "the following authoritative prompt was formulated and submitted to ChatGPT acting as a Senior DevOps Architect:",
-        body_style
-    ))
-
+    story.append(Paragraph("1. Verbatim Prompt Formulation (Step 1)", h1_style))
     prompt_content = (
         "<b>ChatGPT</b><br/>"
-        "<i>\"My project asks me to write a Bash script and then a Puppet manifest to do the same job. This feels redundant.<br/><br/>"
-        "Act as a DevOps Architect and explain the 'why'. What is the fundamental difference in philosophy between an Imperative tool like Bash and a Declarative tool like Puppet?<br/><br/>"
+        "<i>\"My project asks me to write a Bash script and then a Puppet manifest to do the same job. This feels redundant.<br/>"
+        "Act as a DevOps Architect and explain the 'why'. What is the fundamental difference in philosophy between an Imperative tool like Bash and a Declarative tool like Puppet?<br/>"
         "Why would a big company always choose Puppet over a Bash script for managing 1000 servers?\"</i>"
     )
     story.append(Paragraph(prompt_content, prompt_style))
 
     story.append(Paragraph("2. Evidence of Interaction: Complete AI Comparative Explanation (Step 2)", h1_style))
-    story.append(Paragraph(
-        "Below is the complete single visual artifact capturing the exact prompt formulation, model designation, and the full "
-        "comparative analysis synthesized by the DevOps Architect without truncation:",
-        body_style
-    ))
 
     screenshot_path = os.path.join(task_dir, "evidence_screenshot.png")
     if os.path.exists(screenshot_path):
-        # Scale to fit page cleanly
-        img = Image(screenshot_path, width=6.8 * inch, height=5.2 * inch)
+        # Image aspect ratio is 1080 x 1650 (height is 1.528x width).
+        # Width: 3.8 inches, Height: 5.8 inches -> fits cleanly on Page 1!
+        img = Image(screenshot_path, width=3.8 * inch, height=5.8 * inch)
+        img.hAlign = 'CENTER'
         story.append(img)
 
     story.append(PageBreak())
 
     # =========================================================================
-    # PAGE 2: Reflection and Idempotence Analysis & Comparative Matrix
+    # PAGE 2: Critical Reflection and Architectural Comparison Matrix
     # =========================================================================
-    story.append(Paragraph("3. Critical Reflection &amp; Synthesis: Idempotence and Scalability (Step 3)", h1_style))
+    story.append(Paragraph("3. Critical Reflection: Idempotence and Scalability (Step 3)", h1_style))
 
     p1 = (
         "<b>The Operational Mechanics of Idempotence:</b> In configuration management, <b>idempotence</b> represents the mathematical and operational "
@@ -251,7 +228,7 @@ def generate_pdf():
         "Puppet decouples execution from intention. Before applying any mutation, an idempotent engine discovers the host's actual real-time state via "
         "system introspection (such as Facter), compiles an abstract catalog of desired resources, and executes only the minimal corrective delta "
         "necessary to align the system with its declared baseline. If the target state is already satisfied, the tool safely exits with zero modifications, "
-        "ensuring that infrastructure convergence is deterministic, predictable, and resilient against intermittent failures."
+        "ensuring that infrastructure convergence is deterministic, predictable, and resilient against intermittent network or execution failures."
     )
     story.append(Paragraph(p1, body_style))
 
@@ -319,15 +296,15 @@ def generate_pdf():
         ],
     ]
 
-    comp_table = Table(table_data, colWidths=[1.5 * inch, 2.75 * inch, 2.75 * inch])
+    comp_table = Table(table_data, colWidths=[1.5 * inch, 2.85 * inch, 2.85 * inch])
     comp_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#CBD5E0")),
+        ('GRID', (0, 0), (-1, -1), 0.5, BORDER_LIGHT),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor("#F7FAFC")]),
-        ('TOPPADDING', (0, 0), (-1, -1), 2.5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 2.5),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
     ]))
     story.append(comp_table)
 
@@ -349,21 +326,21 @@ def generate_pdf():
         "• <b>README.md:</b> Comprehensive task documentation including executive summary, prompt, analysis, reflection, and comparison matrix.<br/>"
         "• <b>Nebyu_AI_DevOps_Philosophy_and_Tool_Interrogation.pdf:</b> Compiled executive PDF submission document."
     )
-    story.append(Paragraph(checklist_text, link_banner_style))
+    story.append(Paragraph(checklist_text, github_banner_style))
 
     story.append(Paragraph("6. Scoring Rubrics Compliance Matrix", h1_style))
 
     rubric_data = [
         [
             Paragraph("Deliverable / Criterion", table_header_style),
-            Paragraph("Max Pts", table_header_style),
+            Paragraph("Pts", table_header_style),
             Paragraph("Implementation &amp; Compliance Details", table_header_style),
             Paragraph("Status", table_header_style)
         ],
         [
             Paragraph("<b>Document Submission &amp; Naming</b>", table_cell_style),
             Paragraph("<b>5</b>", table_cell_style),
-            Paragraph("Accessible Google Doc/Drive link provided following exact naming convention (<code>Nebyu_AI: DevOps Philosophy and Tool Interrogation</code>). Includes prompt, screenshot, reflection, and repository link.", table_cell_style),
+            Paragraph("Google Doc / Drive document named strictly following the required convention (<code>Nebyu_AI: DevOps Philosophy and Tool Interrogation</code>). Contains Prompt, Screenshot, Reflection, and GitHub Link.", table_cell_style),
             Paragraph("<b>5 / 5</b>", table_cell_style)
         ],
         [
@@ -392,23 +369,23 @@ def generate_pdf():
         ],
     ]
 
-    rubric_table = Table(rubric_data, colWidths=[1.6 * inch, 0.7 * inch, 4.0 * inch, 0.7 * inch])
+    rubric_table = Table(rubric_data, colWidths=[1.5 * inch, 0.5 * inch, 4.5 * inch, 0.7 * inch])
     rubric_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
         ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#22543D")),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#CBD5E0")),
+        ('GRID', (0, 0), (-1, -1), 0.5, BORDER_LIGHT),
         ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor("#F7FAFC")]),
         ('TOPPADDING', (0, 0), (-1, -1), 3),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
     ]))
     story.append(rubric_table)
 
-    story.append(Spacer(1, 8))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#CBD5E0"), spaceAfter=6))
+    story.append(Spacer(1, 10))
+    story.append(HRFlowable(width="100%", thickness=1, color=BORDER_LIGHT, spaceAfter=8))
     story.append(Paragraph(
-        "<b>Submission Verification:</b> All artifacts verified, committed to Git, and prepared for manual QA review.",
+        "<b>Submission Verification:</b> All artifacts verified, pushed to GitHub repository, and prepared for manual QA review.",
         ParagraphStyle('FooterNotice', parent=body_style, fontName='Helvetica-Bold', textColor=colors.HexColor("#22543D"))
     ))
 

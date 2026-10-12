@@ -2,10 +2,9 @@
 
 > **Course:** W7 DevOps & Systems Architecture — AI Lab Assignment  
 > **Student:** Nebyu Assefa  
-> **Submission Document:** `Nebyu_AI: DevOps Philosophy and Tool Interrogation`  
-> **Google Drive Link:** [Google Drive Submission Folder](https://drive.google.com/drive/folders/1ieAJZJY1d9oHZPRUdErNO9y1awVH0i6m?usp=drive_link)  
+> **Submission Document Title:** `Nebyu_AI: DevOps Philosophy and Tool Interrogation`  
 > **GitHub Task Folder:** [0. AI DevOps Philosophy and Tool Interrogation](https://github.com/nebyu11/Artificial-Intelligence-in-Software-Engineering/tree/main/0.%20AI%20DevOps%20Philosophy%20and%20Tool%20Interrogation)  
-> **Weight:** 10 (1.0% Graded) | **Evaluation:** Manual QA Review (Rubric: 20/20 Points)  
+> **Weight:** 10 (1.0% Graded) | **Evaluation:** Manual QA Review (Target: 20/20 Points)  
 
 ---
 
@@ -100,7 +99,7 @@ Across an enterprise fleet of 1,000 servers, system entropy is inevitable: emerg
 
 | Rubric Criterion | Max Pts | Target Deliverable & Implementation Evidence | Status |
 | :--- | :---: | :--- | :---: |
-| **Document Submission & Naming** | **5** | Submitted accessible Google Doc / Drive link using the strict naming convention: `Nebyu_AI: DevOps Philosophy and Tool Interrogation`. Includes prompt, screenshot, reflection, and repository link. | **5 / 5** |
+| **Document Submission & Naming** | **5** | Submitted accessible Google Doc link following the strict naming convention: `Nebyu_AI: DevOps Philosophy and Tool Interrogation`. Contains Prompt, Screenshot, Reflection, and GitHub Link. | **5 / 5** |
 | **Prompt Formulation & Evidence** | **5** | Exact prompt formulated and documented. Single high-resolution screenshot (`evidence_screenshot.png`) clearly captures the complete comparative explanation without truncation. | **5 / 5** |
 | **Reflection & Idempotence Analysis** | **5** | Comprehensive, insightful 2-paragraph reflection analyzing Idempotence, configuration drift prevention, and scalability across 1,000 servers. | **5 / 5** |
 | **GitHub Repository Update** | **5** | Direct link to the dedicated task folder in the learner's public AI repository (`Artificial-Intelligence-in-Software-Engineering`), containing `analysis.txt`, `README.md`, screenshot, and PDF. | **5 / 5** |
@@ -108,10 +107,18 @@ Across an enterprise fleet of 1,000 servers, system entropy is inevitable: emerg
 
 ---
 
-## 🔗 Submission Links
+## 📝 Google Doc Submission Helper (Copy-Paste Ready)
 
-- **Google Drive Submission Document:** [Nebyu_AI: DevOps Philosophy and Tool Interrogation (Google Drive)](https://drive.google.com/drive/folders/1ieAJZJY1d9oHZPRUdErNO9y1awVH0i6m?usp=drive_link)
-- **GitHub Task Folder Link:** [https://github.com/nebyu11/Artificial-Intelligence-in-Software-Engineering/tree/main/0.%20AI%20DevOps%20Philosophy%20and%20Tool%20Interrogation](https://github.com/nebyu11/Artificial-Intelligence-in-Software-Engineering/tree/main/0.%20AI%20DevOps%20Philosophy%20and%20Tool%20Interrogation)
-- **Direct Analysis Text:** [analysis.txt](analysis.txt)
-- **Visual Evidence:** [evidence_screenshot.png](evidence_screenshot.png)
-- **Compiled PDF Report:** [Nebyu_AI_DevOps_Philosophy_and_Tool_Interrogation.pdf](Nebyu_AI_DevOps_Philosophy_and_Tool_Interrogation.pdf)
+When creating your Google Doc for submission, use the following simple checklist:
+1. **Create New Document**: Open [Google Docs](https://docs.new) and set the document title to:  
+   **`Nebyu_AI: DevOps Philosophy and Tool Interrogation`**
+2. **Add Header Information**:
+   - **Student:** Nebyu Assefa
+   - **Course:** W7 DevOps & Systems Architecture
+   - **Assignment:** 0. AI: DevOps Philosophy and Tool Interrogation
+   - **GitHub Task Folder Link:** `https://github.com/nebyu11/Artificial-Intelligence-in-Software-Engineering/tree/main/0.%20AI%20DevOps%20Philosophy%20and%20Tool%20Interrogation`
+3. **Insert the Prompt:** Paste the prompt text from Step 1 above.
+4. **Insert the Screenshot:** Insert `evidence_screenshot.png` directly into the document.
+5. **Insert the Reflection:** Paste the 2-paragraph reflection from Step 4 above.
+6. **Share Settings:** Click **Share** (top-right) $\rightarrow$ General Access $\rightarrow$ Change from "Restricted" to **"Anyone with the link can view"**.
+7. **Submit:** Copy that Google Doc URL and paste it directly into your intranet project submission box.
